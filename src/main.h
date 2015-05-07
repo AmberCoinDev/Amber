@@ -26,7 +26,7 @@ class CInv;
 class CRequestTracker;
 class CNode;
 
-static const int LAST_POW_BLOCK = 491081;
+static const int LAST_POW_BLOCK = 2000000;
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
@@ -40,7 +40,7 @@ static const int64_t MAX_MINT_PROOF_OF_STAKE = 0.25 * COIN;
 static const int64_t COIN_YEAR_REWARD = 25 * CENT; // 25% per year
 
 static const int MODIFIER_INTERVAL_SWITCH = 129600;
-
+static const int REWARD_UPDATE_BLOCK = 116000;
 
 #define FOUNDATION "Null"
 #define FOUNDATION_TEST "Null"
@@ -57,6 +57,7 @@ static const int fHaveUPnP = false;
 
 static const uint256 hashGenesisBlock("0x00000fe99a2613615921ebca71dcf3a9e46b7951b87330f1f5ed71de0f6dcb47");
 static const uint256 hashGenesisBlockTestNet("0x00000fe99a2613615921ebca71dcf3a9e46b7951b87330f1f5ed71de0f6dcb47");
+static const uint256 CheckPointBlock1 ("000000000597774998d27e6f2413567b3d3c54df7235a04a2a167a99fda20131");
 
 inline int64_t PastDrift(int64_t nTime)   { return nTime - 24 * 60 * 60; } // up to 1 day from the past
 inline int64_t FutureDrift(int64_t nTime) { return nTime + 24 * 60 * 60; } // up to 1 day from the future

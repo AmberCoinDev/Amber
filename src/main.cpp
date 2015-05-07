@@ -969,55 +969,102 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 }
 
 // miner's coin base reward
+
+//      Old reward structure
+//      2 - 721 :       1 AMBER
+//      722 - 1441 :    9 AMBER
+//      1442 -> :       20 AMBER
+//
+//      New PoW reward structure at hard fork block 116000
+//
+//      2       -   721     :    1 AMBER
+//      722     -   1441    :    9 AMBER
+//        1,442 -   116,000 :   20 AMBER
+//      116,001 -   150,000 :    4 AMBER
+//      150,001 -   200,000 :    2 AMBER
+//      200,001 -   250,000 :    1 AMBER
+//      250,001 - 1,000,000 :  0.5 AMBER
+//      1,000,000 ->        :  0.1 AMBER
+//      else                :   20 AMBER
 int64_t GetProofOfWorkReward(int64_t nFees)
 {
 
-    int64_t nSubsidy = 20 * COIN;
-        
-    if (pindexBest->nHeight == 1)
-      {
+    if (pindexBest->nHeight == 1) {
         int64_t nSubsidy = 39200000 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
         return nSubsidy + nFees;
       }
-      
-    else if (pindexBest->nHeight <= 721)
-      {
+    else if (pindexBest->nHeight > 1 && pindexBest->nHeight <= 721){
         int64_t nSubsidy = 1 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
         return nSubsidy + nFees;
       }
-      
-    else if (pindexBest->nHeight <= 1441)
-      {
+    else if (pindexBest->nHeight > 721 && pindexBest->nHeight <= 1441){
         int64_t nSubsidy = 9 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
         return nSubsidy + nFees;
       }
-      
+    else if (pindexBest->nHeight > 1442 && pindexBest->nHeight <= REWARD_UPDATE_BLOCK){
+        int64_t nSubsidy = 20 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
+        return nSubsidy + nFees;
+      }
+    else if (pindexBest->nHeight > 116000 && pindexBest->nHeight <= 150000){
+        int64_t nSubsidy = 4 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
+        return nSubsidy + nFees;
+      }
+    else if (pindexBest->nHeight > 150000 && pindexBest->nHeight <= 200000){
+        int64_t nSubsidy = 2 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
+        return nSubsidy + nFees;
+      }
+    else if (pindexBest->nHeight > 200000 && pindexBest->nHeight <= 250000){
+        int64_t nSubsidy = 1 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
+        return nSubsidy + nFees;
+      }
+    else if (pindexBest->nHeight > 250000 && pindexBest->nHeight <= 1000000){
+        int64_t nSubsidy = 0.5 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
+        return nSubsidy + nFees;
+      }
+    else if (pindexBest->nHeight > 1000000){
+        int64_t nSubsidy = 0.1 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
+        return nSubsidy + nFees;
+      }
     else
       {
         int64_t nSubsidy = 20 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
         return nSubsidy + nFees;
       }
-      
-      
-      
-    if (fDebug && GetBoolArg("-printcreation"))
-    printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
-    
-    return nSubsidy + nFees;
 
 }
-
-const int DAILY_BLOCKCOUNT =  1440;
 
 // miner's coin stake reward based on coin age spent (coin-days)
 int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 {
     int64_t nRewardCoinYear;
-
     nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
 
-    int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
-
+    int64_t nSubsidy;
+    
+    if(pindexBest->nHeight <= REWARD_UPDATE_BLOCK)
+        nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
+    else
+        nSubsidy = nCoinAge * nRewardCoinYear / 365;
 
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nCoinAge);
@@ -2004,7 +2051,12 @@ bool CTransaction::GetCoinAge(CTxDB& txdb, uint64_t& nCoinAge) const
             printf("coin age nValueIn=%"PRId64" nTimeDiff=%d bnCentSecond=%s\n", nValueIn, nTime - txPrev.nTime, bnCentSecond.ToString().c_str());
     }
 
-    CBigNum bnCoinDay = bnCentSecond * CENT / (24 * 60 * 60);
+    CBigNum bnCoinDay;
+    if(pindexBest->nHeight <= REWARD_UPDATE_BLOCK)
+        bnCoinDay = bnCentSecond * CENT / (24 * 60 * 60);
+    else
+        bnCoinDay = bnCentSecond * CENT / COIN / (24 * 60 * 60);
+    
     if (fDebug && GetBoolArg("-printcoinage"))
         printf("coin age bnCoinDay=%s\n", bnCoinDay.ToString().c_str());
     nCoinAge = bnCoinDay.getuint64();
