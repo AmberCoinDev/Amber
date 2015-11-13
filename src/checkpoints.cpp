@@ -350,7 +350,7 @@ namespace Checkpoints
 }
 
 // AmberCoin: sync-checkpoint master key
-const std::string CSyncCheckpoint::strMasterPubKey = "049b6983425343bccbf246ddbc6fb4b1615de4a2fa72f6530b2020ac0096c4da1f65dda6cc21bfe0ea243d70063a866480f1ddaa8b26db3abdc753edb9392bb9f0";
+const std::string CSyncCheckpoint::strMasterPubKey = "0469aa9ab4ad8adccb0a4e127206aa5ce727956660d9ddb9a77290beb5e0373d6b8434e0297a230ba45a8baed8030f8ddb57872b30af76bf40554bb1fe9cfecb86";
 
 std::string CSyncCheckpoint::strMasterPrivKey = "";
 
