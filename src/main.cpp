@@ -1037,8 +1037,14 @@ int64_t GetProofOfWorkReward(int64_t nFees)
         printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
         return nSubsidy + nFees;
       }
-    else if (pindexBest->nHeight > 1000000){
+    else if (pindexBest->nHeight > 1000000 && pindexBest->nHeight <= 5000000){
         int64_t nSubsidy = 0.1 * COIN;
+        if (fDebug && GetBoolArg("-printcreation"))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
+        return nSubsidy + nFees;
+      }
+    else if (pindexBest->nHeight > 5000000){
+        int64_t nSubsidy = 0.05 * COIN;
         if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
         return nSubsidy + nFees;
@@ -1056,19 +1062,29 @@ int64_t GetProofOfWorkReward(int64_t nFees)
 // miner's coin stake reward based on coin age spent (coin-days)
 int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 {
-    int64_t nRewardCoinYear;
-    nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
-
     int64_t nSubsidy;
     
     if(pindexBest->nHeight <= REWARD_UPDATE_BLOCK){
-        nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
+        nSubsidy = nCoinAge * MAX_MINT_PROOF_OF_STAKE / 365 / COIN; //old PoS reward
     }
-    else if (pindexBest->nHeight > REWARD_UPDATE_BLOCK){
-        nSubsidy = nCoinAge * nRewardCoinYear / 365;
+    else if (pindexBest->nHeight > REWARD_UPDATE_BLOCK && pindexBest->nHeight <= REWARD_UPDATE_BLOCK_V2){
+        nSubsidy = nCoinAge * MAX_MINT_PROOF_OF_STAKE / 365; //25.0%
     }
-
-
+    else if (pindexBest->nHeight > REWARD_UPDATE_BLOCK_V2 && pindexBest->nHeight <= BLOCK_HEIGHT_END_YEAR1){
+        nSubsidy = nCoinAge * POS_REWARD_YEAR1 / 365; // V2 block switch until year 1 end 7.0%
+    }
+    else if (pindexBest->nHeight > BLOCK_HEIGHT_END_YEAR1 && pindexBest->nHeight <= BLOCK_HEIGHT_END_YEAR2){
+        nSubsidy = nCoinAge * POS_REWARD_YEAR2 / 365; // 2.0%
+    }
+    else if (pindexBest->nHeight > BLOCK_HEIGHT_END_YEAR2 && pindexBest->nHeight <= BLOCK_HEIGHT_END_YEAR3){
+        nSubsidy = nCoinAge * POS_REWARD_YEAR3 / 365; //  1.0%
+    }
+    else if (pindexBest->nHeight > BLOCK_HEIGHT_END_YEAR3 && pindexBest->nHeight <= BLOCK_HEIGHT_END_YEAR7){
+        nSubsidy = nCoinAge * POS_REWARD_YEAR7 / 365; //  0.5%
+    }
+    else if (pindexBest->nHeight > BLOCK_HEIGHT_END_YEAR7){
+        nSubsidy = nCoinAge * POS_REWARD_YEAR_STD / 365; //0.25%
+    }
 
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nCoinAge);

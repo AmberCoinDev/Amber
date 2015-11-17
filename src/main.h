@@ -26,7 +26,7 @@ class CInv;
 class CRequestTracker;
 class CNode;
 
-static const int LAST_POW_BLOCK = 5000000;
+static const int LAST_POW_BLOCK = 10000000;
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
@@ -35,23 +35,23 @@ static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 static const unsigned int MAX_INV_SZ = 50000;
 static const int64_t MIN_TX_FEE = 10000;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
-static const int64_t MAX_MONEY = 50000000 * COIN;
+static const int64_t MAX_MONEY = 500000000 * COIN;
 static const int64_t MAX_MINT_PROOF_OF_STAKE = 0.25 * COIN;
 
 static const int64_t POS_REWARD_YEAR1 = 0.07 * COIN; // Mandatory update (Hard fork) to change year 1 PoS reward
 static const int64_t POS_REWARD_YEAR2 = 0.02 * COIN; // Year 2 reward
-static const int64_t POS_REWARD_YEAR3 = 0.07 * COIN; // Year 3 reward
-static const int64_t POS_REWARD_YEAR4 = 0.05 * COIN; // Year 4 -> 7 reward
-static const int64_t POS_REWARD_YEAR8 = 0.025 * COIN; // Year 8 -> onwards
+static const int64_t POS_REWARD_YEAR3 = 0.01 * COIN; // Year 3 reward
+static const int64_t POS_REWARD_YEAR7 = 0.005 * COIN; // Year 4 -> 8 reward
+static const int64_t POS_REWARD_YEAR_STD = 0.0025 * COIN; // Year 8 -> onwards
 
 static const int MODIFIER_INTERVAL_SWITCH = 129600;
 static const int REWARD_UPDATE_BLOCK = 116000;
+static const int REWARD_UPDATE_BLOCK_V2 = 590000;
 
 static const int64_t BLOCK_HEIGHT_END_YEAR1 = 1051200; // year 1 end estimated block height
 static const int64_t BLOCK_HEIGHT_END_YEAR2 = 2102400; // year 2 end estimated block height
 static const int64_t BLOCK_HEIGHT_END_YEAR3 = 3153600; // year 3 end estimated block height
-static const int64_t BLOCK_HEIGHT_END_YEAR4 = 4204800; // year 4 end estimated block height
-static const int64_t BLOCK_HEIGHT_END_YEAR8 = 8409600; // year 8 end estimated block height
+static const int64_t BLOCK_HEIGHT_END_YEAR7 = 7358400; // year 7 end estimated block height
 
 
 #define FOUNDATION "Null"
