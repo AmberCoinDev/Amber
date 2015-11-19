@@ -35,7 +35,7 @@ static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 static const unsigned int MAX_INV_SZ = 50000;
 static const int64_t MIN_TX_FEE = 10000;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
-static const int64_t MAX_MONEY = 500000000 * COIN;
+static const int64_t MAX_MONEY = 50000000 * COIN; // Revert back to 50m, after dev discussion.
 static const int64_t MAX_MINT_PROOF_OF_STAKE = 0.25 * COIN;
 
 static const int64_t POS_REWARD_YEAR1 = 0.07 * COIN; // Mandatory update (Hard fork) to change year 1 PoS reward
