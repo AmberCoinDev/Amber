@@ -1142,6 +1142,11 @@ static const char *strDNSSeed[][2] = {
     {"ambernode1.mooo.com", "ambernode1.mooo.com"},
     {"ambernode2.mooo.com", "ambernode2.mooo.com"},
     {"ambernode3.mooo.com", "ambernode3.mooo.com"},
+    {"ambernode4.mooo.com", "ambernode4.mooo.com"}, //future growth
+    {"ambernode5.mooo.com", "ambernode5.mooo.com"}, //future growth
+    {"ambernode6.mooo.com", "ambernode6.mooo.com"}, //future growth
+    {"ambernode7.mooo.com", "ambernode7.mooo.com"}, //future growth
+    {"ambernode8.mooo.com", "ambernode8.mooo.com"}, //future growth
 };
 
 void ThreadDNSAddressSeed(void* parg)
