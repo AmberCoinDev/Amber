@@ -1139,14 +1139,14 @@ void MapPort()
 // The first name is used as information source for addrman.
 // The second name should resolve to a list of seed addresses.
 static const char *strDNSSeed[][2] = {
-    {"ambercoin1.mooo.com", "ambercoin1.mooo.com"},
-    {"ambercoin2.mooo.com", "ambercoin2.mooo.com"},
-    {"ambercoin3.mooo.com", "ambercoin3.mooo.com"},
-    {"ambercoin4.mooo.com", "ambercoin4.mooo.com"}, //future growth
-    {"ambercoin5.mooo.com", "ambercoin5.mooo.com"}, //future growth
-    {"ambercoin6.mooo.com", "ambercoin6.mooo.com"}, //future growth
-    {"ambercoin7.mooo.com", "ambercoin7.mooo.com"}, //future growth
-    {"ambercoin8.mooo.com", "ambercoin8.mooo.com"}, //future growth
+    {"ambercoin01.mooo.com", "ambercoin01.mooo.com"},
+    {"ambercoin02.mooo.com", "ambercoin02.mooo.com"},
+    {"ambercoin03.mooo.com", "ambercoin03.mooo.com"},
+    {"ambercoin04.mooo.com", "ambercoin04.mooo.com"}, //future growth
+    {"ambercoin05.mooo.com", "ambercoin05.mooo.com"}, //future growth
+    {"ambercoin06.mooo.com", "ambercoin06.mooo.com"}, //future growth
+    {"ambercoin07.mooo.com", "ambercoin07.mooo.com"}, //future growth
+    {"ambercoin08.mooo.com", "ambercoin08.mooo.com"}, //future growth
 };
 
 void ThreadDNSAddressSeed(void* parg)
