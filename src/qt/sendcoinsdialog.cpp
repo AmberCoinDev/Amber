@@ -18,6 +18,7 @@
 
 #include <QMessageBox>
 #include <QLocale>
+#include <QString>
 #include <QTextDocument>
 #include <QScrollBar>
 #include <QClipboard>
