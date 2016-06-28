@@ -30,7 +30,9 @@ static leveldb::Options GetOptions() {
     int nCacheSizeMB = GetArg("-dbcache", 25);
     options.block_cache = leveldb::NewLRUCache(nCacheSizeMB * 1048576);
     options.filter_policy = leveldb::NewBloomFilterPolicy(10);
+    options.max_open_files = 64; // set max file descriptors for Mac
     return options;
+
 }
 
 void init_blockindex(leveldb::Options& options, bool fRemoveOld = false) {
